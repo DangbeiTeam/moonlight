@@ -1,0 +1,109 @@
+apply plugin: 'com.android.library'
+apply from: '../framework.gradle'
+apply from: '../dependency.gradle'
+
+android {
+    namespace "com.dangbei.moonlight.provider"
+    compileSdkVersion global_compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion global_minSdkVersion
+        targetSdkVersion global_targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+
+    buildTypes {
+        release {
+            postprocessing {
+                removeUnusedCode false
+                removeUnusedResources false
+                obfuscate false
+                optimizeCode false
+                proguardFile 'proguard-rules.pro'
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    sourceSets {
+        main {
+            aidl.srcDirs = ['src/main/aidl']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+
+    // dal request
+    api("com.dangbei:dal_request:$global_dalRequestVersion", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.squareup.okhttp3', module: 'okhttp'
+        exclude group: 'io.reactivex.rxjava2', module: 'rxjava'
+    })
+    api("com.dangbei:dal_request-gson:$global_dalRequestGsonVersion", {
+        exclude group: 'com.google.code.gson', module: 'gson'
+    })
+
+    // xlog
+    api "com.dangbei:xlog:$global_xlogVersion"
+
+    // xfunc
+    api "com.dangbei:xfunc:$global_xfuncVersion"
+
+    // okhttp
+    api "com.squareup.okhttp3:okhttp:$global_okhttpVersion"
+    // gson
+    api "com.google.code.gson:gson:$global_gsonVersion"
+
+    // rxjava/rxandroid
+    api "io.reactivex.rxjava2:rxjava:$global_rxjavaVersion"
+    api "io.reactivex.rxjava2:rxandroid:$global_rxandroidVersion"
+
+
+
+    // RapidORM
+    api "com.dangbei:rapidorm:$global_rapidormVersion"
+    api "com.dangbei:rapidorm-api:$global_rapidormApiVersion"
+    annotationProcessor "com.dangbei:rapidorm-compiler:$global_rapidormCompilerVersion"
+
+
+
+    //dangbei deviceID
+    implementation "com.dangbei:edeviceid:$global_edeviceidVersion"
+
+    //lerad-api
+    api(getCompileModule('com.dangbei:lerad-api', ':lerad-api')) {
+        transitive = false
+    }
+
+    // rxbus
+    api "com.monster:rxbus:$global_dangbei_rxbusVersion"
+
+    implementation "com.dangbei.leradlauncher.pro.base:support:$global_leradlauncher_base"
+
+    // router
+    implementation "com.dangbei:rapidrouter:$global_rapidrouterVersion"
+    implementation "com.dangbei:rapidrouter-api:$global_rapidrouterApiVersion"
+    annotationProcessor "com.dangbei:rapidrouter-compiler:$global_rapidrouterCompilerVersion"
+
+    api "com.airbnb.android:lottie:$global_lottieVersion"
+
+    api "com.google.zxing:core:$global_zxingVersion"
+
+    api("com.dangbei:lerad-api-support:1.5.5") {
+        exclude group: 'com.android.support'
+    }
+
+
+}

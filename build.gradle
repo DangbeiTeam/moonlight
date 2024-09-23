@@ -1,0 +1,163 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+apply from: "prefix.gradle"
+
+task loadVersionNameAndCode {
+    println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
+    println("loadVersionNameAndCode begins....")
+    setDynamicConfig()
+    println("versinCode is " + appVersionCode)
+    println("versinName is " + appVersionName)
+    println("loadVersionNameAndCode ends....")
+    println("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||")
+}
+
+buildscript {
+    ext.kotlin_version = '1.6.10'
+    repositories {
+        maven { allowInsecureProtocol = true;url 'https://maven.aliyun.com/repository/google' }
+        maven { allowInsecureProtocol = true; url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { allowInsecureProtocol = true; url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        google()
+        jcenter()
+        maven { allowInsecureProtocol = true; url 'https://repo1.maven.org/maven2/' }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.2.2'
+//        classpath 'com.android.tools.build:gradle:4.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle filesLintModelSeverity
+    }
+}
+
+
+allprojects {
+    repositories {
+        maven { allowInsecureProtocol = true; url 'https://maven.aliyun.com/repository/google' }
+        maven { allowInsecureProtocol = true; url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { allowInsecureProtocol = true; url 'http://maven.aliyun.com/nexus/content/groups/public' }
+        google()
+        jcenter()
+        maven { allowInsecureProtocol = true; url 'http://nexus.dangbei.net/nexus/content/groups/public' }
+        maven {
+            allowInsecureProtocol = true;
+            url "https://jitpack.io"
+        }
+        maven { allowInsecureProtocol = true; url 'https://repo1.maven.org/maven2/' }
+    }
+
+    // --refresh-dependencies
+    configurations.all {
+        // check for updates every build
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+
+    ext {
+        global_compileSdkVersion = 34
+        global_minSdkVersion = 21
+        global_targetSdkVersion = 23
+        global_supportVersion = '27.1.1'
+//        global_recyclerViewVersion = '27.1.1'
+//        global_leanbackVersion = '27.1.1'
+        global_glideVersion = '4.7.1'
+
+        // ************** for app ************** //
+        //leanback需要25.0.0支持，25.0.0以上leanback在部分机型会报错
+        global_mvparchitecutureVersion = '2.0.0'
+        global_mvparchitecutureRxVersion = '2.0.0'
+
+        global_flexboxVersion = '0.2.3'
+
+        global_daggerVersion = '2.11'
+        global_daggerCompilerVersion = '2.11'
+        global_glideVersion = '4.6.1'
+        global_glideokhttpintegrationVersion = '1.4.0'
+
+        global_okhttpVersion = '3.10.0'
+
+        global_gsonVersion = '2.8.0'
+
+        global_rxjavaVersion = '2.1.11'
+        global_rxandroidVersion = '2.0.2'
+
+//        global_rapidormApiVersion = '2.2.0'
+//        global_rapidormVersion = '2.2.1@aar'
+//        global_rapidormCompilerVersion = '2.2.0'
+
+        global_rapidormApiVersion = '1.0.5'
+        global_rapidormVersion = '1.0.5@aar'
+        global_rapidormCompilerVersion = '1.0.5'
+
+        global_etnaAidlClientVersion = "1.0.1"
+
+        global_discardfileApiVersion = '1.0.1'
+
+        global_rapidrouterApiVersion = '1.0.2'
+        global_rapidrouterVersion = '1.0.2'
+        global_rapidrouterCompilerVersion = '1.0.2'
+
+        global_xlogVersion = '1.0.1'
+        global_xfuncVersion = '1.0.1'
+
+        global_seizerecyclerviewVersion = '1.0.1_db'
+        global_gonzalezVersion = '1.0.9'
+        global_palaemonVersion = '1.2.0'
+        global_edeviceidVersion = '1.0.9'
+//        global_yggdrasillVersion = '1.0.0-SNAPSHOT'
+//        global_midgardVersion = '1.0.0-SNAPSHOT'
+        global_leanbackcomponentVersion = '1.0.7'
+
+        global_facebookdeviceyearVersion = '2.0.0'
+
+        global_dalRequestVersion = '1.1.1'
+        global_dalRequestGsonVersion = '1.1.1'
+
+
+        global_multidexVersion = '1.0.3'
+
+        global_dangbei_updateVersion = '2.1.5'
+
+        global_dangbei_payVersion = '1.8'
+
+        global_dbpushVersion = '1.4.1'
+//        global_mimirFrameworkApiVersion = '1.0.4-SNAPSHOT'
+
+        global_leakcanaryVersion = '1.5.4'
+        global_umengAnalyticsVersion = "6.1.4"
+
+        global_v7_preferenceVersion = "27.1.1"
+        global_preferecenLeanVersion = "27.1.1"
+        global_v14_preferenceVersion = "27.1.1"
+
+        global_switch_button = "2.0.0"
+        global_leradlauncher_base = "1.1.8"
+        global_lerad_version = "1.0.8"
+
+        global_lottieVersion = '5.2.0'
+        global_zxingVersion='3.3.3'
+
+        // ************** for test ************** //
+        global_junitVersion = '4.12'
+        global_mockitoVersion = '1.10.19'
+        global_dexmakerMockitoVersion = '1.2'
+        global_powerMockito = '1.6.2'
+        global_hamcrestVersion = '1.3'
+        global_runnerVersion = '1.0.1'
+        global_rulesVersion = '0.5'
+        global_espressoVersion = '3.0.1'
+        global_jacocoToolVersion = '0.7.7.201606060606'
+//        global_zxingVersion = '3.3.3'
+
+
+        global_spartaVersion="1.0.0"
+        global_clothoVersion="1.0.1"
+        global_ijkplayerVersion = "0.8.8"
+        global_exoplayerVersion = "2.10.0"
+
+        global_dangbei_rxbusVersion = "1.0.1"
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

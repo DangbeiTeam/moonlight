@@ -1,0 +1,19 @@
+.gradle
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+build
+
+# Intellij
+*.iml
+*.ipr
+*.iws
+.idea/**
+.idea/gradle.xml
+.idea/misc.xml
+.idea/codeStyleSettings.xml
+.idea/inspectionProfiles
+.idea/inspectionProfiles/Project_Default.xml
+.idea/

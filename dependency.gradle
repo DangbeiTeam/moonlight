@@ -1,0 +1,65 @@
+def includeModuleCompat(String moduleName, String modulePath, Properties localProperties) {
+    String libraryVersion = getModuleVersionProperty(moduleName.substring(1));
+    if (null != libraryVersion) {
+        print("----> [" + moduleName + "] -> " + libraryVersion + "<br/>")
+    } else {
+        print("----> [" + moduleName + "] -> source<br/>")
+
+        String allowSourceDependency = "allowSourceDependency";
+//        if(!localProperties.hasProperty(allowSourceDependency)){
+//            throw new RuntimeException("Module source dependency is not allowed(`allowSourceDependency` property is not exists).")
+//        }
+
+        File moduleFile = new File(settingsDir, modulePath);
+        println("moduleFile:" + moduleFile.path)
+//        if (!"true".equalsIgnoreCase(localProperties.getProperty(allowSourceDependency))) {
+//            throw new RuntimeException("Module [" + moduleName + "] source code in `" + moduleFile.absolutePath + "` source dependency is not allowed (property " + allowSourceDependency + " is not true)")
+//        }
+
+        if (!moduleFile.exists()) {
+            throw new RuntimeException("Module [" + moduleName + "] source code in `" + moduleFile.absolutePath + "` is not exists.")
+        }
+
+        include(moduleName)
+        project(moduleName).projectDir = moduleFile
+    }
+}
+
+def getCompileModule(String artifactStaff, String moduleName) {
+    String libraryVersion = getModuleVersionProperty(moduleName.substring(1));
+    if (null != libraryVersion) {
+        String result = artifactStaff + ":" + libraryVersion
+        println("[getCompileModule]Dependency mode[" + moduleName + "] -> " + result)
+        return result
+    } else {
+        println("[getCompileModule]Dependency mode[" + moduleName + "] -> SOURCE")
+        return project(moduleName)
+    }
+}
+
+def getModuleVersionProperty(String module) {
+    // from command: gradle -Pkey1="value1" -Pkey2="value2" build
+    if (hasProperty(module)) {
+        String value = getProperty(module);
+        if (null != value && !"".equals(value)) {
+            println("hasProperty:" + value)
+            return value
+        }
+    }
+
+    // from `gradle.properties`
+    String key = 'global_dangbei_' + module + 'Version';
+    if (hasProperty(key)) {
+        String value = getProperty(key);
+        if (null != value && !"".equals(value)) {
+            println("hasProperty111:" + value + ":::" + key)
+            return value
+        }
+    }
+    return null
+}
+
+ext {
+    getCompileModule = this.&getCompileModule
+    includeModuleCompat = this.&includeModuleCompat
+}

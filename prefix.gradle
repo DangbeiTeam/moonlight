@@ -1,0 +1,24 @@
+/**
+ * 获取动态配置信息
+ */
+def setDynamicConfig() {
+    println("==setAppConfig begins==")
+    println("------------------>- start -<---------------------------------")
+
+    ext.appVersionCode = 1
+    ext.appVersionName = "1.0.0"
+    ext.appPackageName = "com.dangbei.moonlight"
+
+    println("------------------>- end -<---------------------------------")
+}
+
+def includeSource() {
+    setDynamicConfig()
+}
+
+ext {
+    setDynamicConfig = this.&setDynamicConfig
+    includeSource = this.&includeSource
+    getParameter = this.&getParameter
+}
+

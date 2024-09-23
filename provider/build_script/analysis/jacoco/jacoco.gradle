@@ -1,0 +1,40 @@
+apply plugin: 'jacoco'
+
+// https://gist.github.com/wangjiegulu/76c668f75536fe7ddb4b18545bb369dc
+/**
+ *
+ * 注意：运行该task必须在Build Variant为"_testDebug"下！
+ *
+ * gradle clean testDebugUnitTest jacocoTestReport
+ *
+ * build/reports/jacoco/jacocoTestReport
+ */
+jacoco {
+    toolVersion = "$global_jacocoToolVersion"
+}
+
+def coverageSourceDirs = [
+        "src/main/java"
+]
+
+task jacocoTestReport(type: JacocoReport, dependsOn: "testDebugUnitTest") {
+    group = "Reporting"
+
+    description = "Generate Jacoco coverage reports"
+
+    classDirectories = fileTree(
+            dir: 'build/intermediates/classes/debug',
+            includes: ['**/*Presenter.class']
+    )
+
+    additionalSourceDirs = files(coverageSourceDirs)
+    sourceDirectories = files(coverageSourceDirs)
+    executionData = files('build/jacoco/testDebugUnitTest.exec')
+
+    reports {
+        xml.enabled = false
+        html.enabled = true
+        csv.enabled = false
+    }
+
+}

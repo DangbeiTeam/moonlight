@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">贝灯Moonlight</string>
+    <string name="agreement_title">用户协议和隐私政策概要</string>
+    <string name="agreement_content_weilai">尊敬的用户，《用户协议和隐私政策》详细记录了我们的服务规则和对个人信息的使用规则，敬请您在使用服务前仔细阅读并同意。这对于提升我们的服务质量和保障您的合法权益非常重要。</string>
+    <string name="user_agreement_user_url">声明</string>
+    <string name="user_agreement_private_url">用户协议及隐私条款</string>
+    <string name="user_agreement_check_msg">我已阅读并同意相关服务条款和隐私政策</string>
+    <string name="user_agreement_check_tip_desc">请充分阅读并理解</string>
+    <string name="user_agreement_pass">同意</string>
+    <string name="user_agreement_exit">不同意并退出应用</string>
+</resources>

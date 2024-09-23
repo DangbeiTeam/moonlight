@@ -1,0 +1,180 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: '../dependency.gradle'
+
+android {
+    namespace "com.dangbei.moonlight"
+
+    compileSdkVersion global_compileSdkVersion
+    defaultConfig {
+        applicationId appPackageName
+        minSdkVersion global_minSdkVersion
+        targetSdkVersion global_targetSdkVersion
+        versionCode appVersionCode
+        versionName appVersionName
+        multiDexEnabled true
+
+        ndk {
+            // 保留这种架构的CPU
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86-64"
+        }
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    signingConfigs {
+        debug {
+            storeFile file("moonlight.jks")
+            storePassword sign_storePassword_debug
+            keyAlias sign_keyAlias_debug
+            keyPassword sign_keyPassword_debug
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+        release {
+            storeFile file("moonlight.jks")
+            storePassword sign_storePassword_release
+            keyAlias sign_keyAlias_release
+            keyPassword sign_keyPassword_release
+            v1SigningEnabled true
+            v2SigningEnabled true
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            zipAlignEnabled true
+            minifyEnabled false
+//            shrinkResources true // need not to add in AS2.2
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'push-proguard-rules.pro'
+            signingConfig signingConfigs.debug
+            // 打开该属性的话，在断点调试的时候会导致方法参数值丢失（看不到），所以在调试的时候要记得把它关掉
+            testCoverageEnabled false
+            buildConfigField "boolean", "USE_DEFAULT_CHANNEL_IF_UNKNOWN", "true"
+        }
+
+        release {
+            debuggable false
+            zipAlignEnabled true
+            minifyEnabled true
+            testCoverageEnabled false
+//            shrinkResources true // need not to add in AS2.2
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro', 'push-proguard-rules.pro'
+            signingConfig signingConfigs.release
+
+            buildConfigField "boolean", "USE_DEFAULT_CHANNEL_IF_UNKNOWN", "false"
+
+            applicationVariants.all { variant ->
+                variant.outputs.all { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        def fileName
+                        def nameStuff = "moonlight_${defaultConfig.versionName}";
+                        if (variant.buildType.name == "release") {
+                            fileName = nameStuff + "_release.apk"
+                        } else if (variant.buildType.name == "debug") {
+                            fileName = nameStuff + "_debug.apk"
+                        } else {
+                            fileName = nameStuff + "_unknown.apk"
+                        }
+                        outputFileName = fileName;
+                    }
+                }
+            }
+        }
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    // http://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.LintOptions.html#com.android.build.gradle.internal.dsl.LintOptions
+    lintOptions {
+        checkReleaseBuilds false
+        disable 'InvalidPackage'
+        abortOnError false
+        absolutePaths false
+        xmlReport true
+        htmlReport true
+        lintConfig file("$rootDir/build_script/analysis/lint/lint.xml")
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    sourceSets {
+        main {
+            assets.srcDirs = ['src/main/assets', 'src/main/assets/']
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
+
+    // provider
+    implementation project(':provider')
+    // moonlight
+    implementation project(':moonlight')
+
+    //multi dex
+    implementation 'androidx.multidex:multidex:2.0.0'
+
+    // glide
+    implementation "com.github.bumptech.glide:glide:4.8.0"
+    annotationProcessor "com.github.bumptech.glide:compiler:4.8.0"
+
+    implementation "com.dangbei:dangbie_mvp:1.0.1"
+    implementation('com.dangbei:gonzalez:1.0.16') {
+        exclude group: 'com.android.support', module: 'constraint-layout'
+    }
+    implementation 'com.dangbei:palaemon:1.5_sony'
+    implementation 'com.dangbei:xlog:1.0.1'
+    implementation 'com.dangbei:pandora:1.0.2'
+
+    implementation "com.dangbei.leradlauncher.pro.base:control:$global_leradlauncher_base"
+    implementation "com.dangbei.leradlauncher.pro.base:support:$global_leradlauncher_base"
+    implementation "com.dangbei.leradlauncher.pro.base:util:$global_leradlauncher_base"
+    implementation "com.dangbei.leradlauncher.pro.base:view:$global_leradlauncher_base"
+    implementation "com.dangbei.leradlauncher.pro.base:viewer:$global_leradlauncher_base"
+    // adapter
+    implementation 'com.dangbei:asteria:1.0.7'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    // 数据统计
+    implementation "com.monster:statistics:2.0.0.1"
+    implementation "androidx.core:core-ktx:1.6.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    // leanback component
+    implementation('com.dangbei:leanbackcomponent:1.1.2')
+}
+

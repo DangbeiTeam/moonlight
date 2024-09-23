@@ -1,0 +1,18 @@
+apply from: 'dependency.gradle'
+
+include ':app', ':provider'
+
+project(":provider").projectDir = new File(settingsDir, "provider")
+
+Properties localProperties = new Properties()
+File localPropertiesFile = new File("$settingsDir/local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(localPropertiesFile.newDataInputStream())
+}
+
+print("====> Module START<br/>")
+includeModuleCompat(":palaemon", "../palaemon/library", localProperties)
+includeModuleCompat(":lerad-api", "../lerad-api/library", localProperties)
+includeModuleCompat(":hqplayer", "../hqplayer/library", localProperties)
+println("====> Module END")
+include ':moonlight'

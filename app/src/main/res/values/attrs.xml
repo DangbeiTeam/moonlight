@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="HealingSpaceRenderView">
+        <attr name="healingSpaceType">
+            <enum name="art_pic" value="2" />
+            <enum name="live" value="3" />
+            <enum name="music" value="1" />
+            <enum name="weather" value="4" />
+            <enum name="lofi" value="5" />
+        </attr>
+    </declare-styleable>`
+
+
+    <declare-styleable name="common_params">
+        <attr name="roundRadius" format="integer"></attr>
+        <attr name="enableRound" format="boolean"></attr>
+        <attr name="shadow" format="float"></attr>
+        <attr name="enableShadow" format="boolean"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="XTextView">
+        <attr name="roundRadius"></attr>
+        <attr name="enableRound"></attr>
+        <attr name="shadow"></attr>
+        <attr name="enableShadow"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="XImageView">
+        <attr name="roundRadius"></attr>
+        <attr name="enableRound"></attr>
+        <attr name="shadow"></attr>
+        <attr name="enableShadow"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="XButton">
+        <attr name="roundRadius"></attr>
+        <attr name="enableRound"></attr>
+        <attr name="shadow"></attr>
+        <attr name="enableShadow"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="XFrameLayout">
+        <attr name="roundRadius"></attr>
+        <attr name="enableRound"></attr>
+        <attr name="shadow"></attr>
+        <attr name="enableShadow"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="XLinearLayout">
+        <attr name="roundRadius"></attr>
+        <attr name="enableRound"></attr>
+        <attr name="shadow"></attr>
+        <attr name="enableShadow"></attr>
+    </declare-styleable>
+
+    <declare-styleable name="XRelativeLayout">
+        <attr name="roundRadius"></attr>
+        <attr name="enableRound"></attr>
+        <attr name="shadow"></attr>
+        <attr name="enableShadow"></attr>
+    </declare-styleable>
+</resources>

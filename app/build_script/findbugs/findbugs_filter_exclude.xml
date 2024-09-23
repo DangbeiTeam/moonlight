@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FindBugsFilter>
+    <!-- Ignore unit tests -->
+    <Match>
+        <!-- test classes are suffixed by 'Test' -->
+        <Class name="~.*Test$"/>
+        <!--<Not>-->
+            <!--<Bug code="IJU"/> &lt;!&ndash; 'IJU' is the code for bugs related to JUnit test code &ndash;&gt;-->
+        <!--</Not>-->
+    </Match>
+
+    <!-- Ignore warnings about field names in R -->
+    <Match>
+        <Class name="~.*\.R(?:\$.*)?$"/>
+        <Bug code="Nm,MS,NP"/>
+    </Match>
+
+    <!-- Ignore ijkplayer -->
+    <Match>
+        <Class name="~tv\.danmaku\.ijk\.media\.player.*"/>
+        <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD"/>
+    </Match>
+
+    <!-- Ignore RapidORM -->
+    <Match>
+        <Class name="~.*_RORM$"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH"/>
+    </Match>
+
+    <!-- Ignore mvparchitecture -->
+    <Match>
+        <Class name="~.*\.mvparchitecture\..*"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+
+    <!-- Ignore WeakRef<Viewer>.get().... -->
+    <Match>
+        <!--<Class name="~.+Presenter.*"/>-->
+        <Class name="~.*ui\..*Presenter.*"/>
+        <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE"/>
+    </Match>
+
+    <!-- Ignore STG/ITG -->
+    <Match>
+        <Class name="~.*WebApiConstants.*"/>
+        <Or>
+            <Method name="getHttpHost"/>
+            <Method name="getHttpsHost"/>
+        </Or>
+        <Bug pattern="DB_DUPLICATE_BRANCHES"/>
+    </Match>
+
+    <!-- write to static from instance method -->
+    <Match>
+        <Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD"/>
+    </Match>
+
+
+</FindBugsFilter>

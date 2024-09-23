@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://tools.android.com/tips/lint-checks -->
+<lint>
+    <!-- Disable the given check in this project -->
+    <issue id="IconMissingDensityFolder" severity="ignore"/>
+    <issue id="MissingTranslation" severity="ignore"/>
+    <issue id="GoogleAppIndexingWarning" severity="ignore"/>
+</lint>

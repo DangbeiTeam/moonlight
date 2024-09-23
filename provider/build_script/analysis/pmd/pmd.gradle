@@ -1,0 +1,23 @@
+apply plugin: 'pmd'
+
+task pmd(type: Pmd) {
+    ignoreFailures = true
+    ruleSetFiles = files("$rootDir/build_script/analysis/pmd/pmd.xml")
+    ruleSets = []
+
+    source 'src/main/java/'
+    include '**/*.java'
+    exclude '**/gen/**', '**/build/**'
+    classpath = files()
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+//        xml {
+//            destination "$project.buildDir/reports/pmd/pmd.xml"
+//        }
+//        html {
+//            destination "$project.buildDir/reports/pmd/pmd.html"
+//        }
+    }
+}

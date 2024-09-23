@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background_gradient_start">#000000</color>
+    <color name="background_gradient_end">#DDDDDD</color>
+    <color name="fastlane_background">#0096a6</color>
+    <color name="search_opaque">#ffaa3f</color>
+    <color name="detail_background">#0096a6</color>
+    <color name="soft_opaque">#30000000</color>
+    <color name="img_soft_opaque">#30FF0000</color>
+    <color name="black_opaque">#AA000000</color>
+    <color name="black">#000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="dialog_btn_f">#ff000000</color>
+    <color name="orange_transparent">#AAFADCA7</color>
+    <color name="orange">#FADCA7</color>
+    <color name="yellow">#EEFF41</color>
+    <color name="default_background">#3d3d3d</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- 详情页-评论-->
+    <color name="comment_font_white">#77FFFFFF</color>
+    <color name="comment_list_line">#33FFFFFF</color>
+    <color name="comment_dig_bg">#44000305</color>
+    <color name="detail_pb_unreach">#355C9B</color>
+    <!-- <color name="detail_pb_reach">#06CA25</color>-->
+    <color name="detail_pb_reach">#3FA91A</color>
+    <!--mixDetail 主色调-->
+    <color name="mix_bg">#ff14174f</color>
+    <color name="splash_bg_color">#14427E</color>
+
+</resources>
